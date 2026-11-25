@@ -1,3 +1,5 @@
+from typing import Self
+
 from user_utils.contacts.contact_models.contact import Contact
 
 
@@ -6,7 +8,7 @@ class AddressBook:
 	def __init__(self, contacts: list[Contact]):
 		self.contacts = contacts
 
-	def from_bin(self, bin_path: str) -> None:
+	def from_bin(self, bin_path: str) -> Self:
 		pass
 
 	def to_bin(self, bin_path: str) -> None:
