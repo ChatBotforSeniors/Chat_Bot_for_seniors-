@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 class NoteRecord:
 	title: str
 	text: str
-	id: int
 	tags: list[str] = field(default_factory=list)
 
 
