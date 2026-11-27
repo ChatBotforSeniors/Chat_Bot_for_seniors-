@@ -8,8 +8,19 @@ class Notes:
 	def __init__(self, notes: list[NoteRecord]):
 		self.notes = notes
 
-	def from_bin(self, bin_path: str) -> Self:
-		pass
 
-	def to_bin(self, bin_path: str) -> None:
-		pass
+		def add_note(
+				self, title: str,
+				text: str,
+				tags: str | None,
+			) -> None:
+				max(note.id for note in self.notes)
+				self.notes.append(
+					NoteRecord(
+						title = title,
+						text = [text],
+						tags = [tags] if tags is not None else [],
+					)
+				)
+
+		
