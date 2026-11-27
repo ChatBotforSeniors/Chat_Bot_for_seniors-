@@ -67,6 +67,8 @@ class Contact:
 				raise ValueError("Invalid date format. Use DD.MM.YYYY")
 
 	def add_email(self, email: str) -> None:
+		if email in self.emails:
+			raise ValueError(f'Email {email} already exists in contact {self.name}')
 		self.__validate_email([email])
 		self.emails.append(email)
 
@@ -90,6 +92,8 @@ class Contact:
 		self.birthday = None
 
 	def add_phone_number(self, number: str) -> None:
+		if number in self.phone_numbers:
+			raise ValueError(f'Phone number {number} already exists in contact {self.name}')
 		self.__validate_phone_number([number])
 		self.phone_numbers.append(number)
 
