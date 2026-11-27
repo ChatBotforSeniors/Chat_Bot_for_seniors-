@@ -10,11 +10,12 @@ class AddressBook:
 	def __init__(self, contacts: list[Contact]):
 		self.contacts = contacts
 
-	def find_contact(self, literal: str) -> Contact | None:
+	def find_contact(self, predicate: str) -> list[Contact]:
+		result: list[Contact] = []
 		for contact in self.contacts:
-			if contact.name == literal or literal in contact.emails:
-				return contact
-		return None
+			if contact.name == predicate or predicate in contact.emails or predicate in contact.phone_numbers:
+				result.append(contact)
+		return result
 
 	def add_contact(
 		self, name: str,
@@ -23,6 +24,8 @@ class AddressBook:
 		address: str | None,
 		birthday: date | None
 	) -> None:
+		if self.find_contact(name):
+			raise ValueError(f'Contact {name} already exists')
 		self.contacts.append(
 			Contact(
 				name = name,
@@ -33,11 +36,12 @@ class AddressBook:
 			)
 		)
 
-	def remove_contact(self, literal: str) -> None:
+	def remove_contact_by_name(self, name: str) -> None:
 		counter: int = 0
 		while counter < len(self.contacts):
-			if self.contacts[counter].name == literal or literal in self.contacts[counter].emails:
+			if self.contacts[counter].name == name:
 				del self.contacts[counter]
+				break
 			else:
 				counter += 1
 				
@@ -54,7 +58,7 @@ class AddressBook:
 				year = n_days_later.year,
 				month = contact.birthday.month,
 				day = contact.birthday.day
-			) if not (contact.birthday.month == 2 and contact.birthday.day == 29 and calendar.isleap(n_days_later.year)) else date(
+			) if not contact.birthday.month == 2 and contact.birthday.day == 29 and calendar.isleap(n_days_later.year) else date(
 				# leap year case
 				year = n_days_later.year,
 				month = contact.birthday.month,
